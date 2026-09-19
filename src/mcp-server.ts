@@ -22,8 +22,7 @@ server.tool(
   async (input) => {
     const result = await reviewRepository({
       repositoryPath: input.repo_path,
-      baseRef: input.baseRef,
-      validationCommands: input.validationCommands,
+      baseRef: input.baseRef
     });
     return { content: [{ type: "text", text: renderReport(result, input.format ?? "markdown") }] };
   },
