@@ -1,3 +1,4 @@
+# First 10 Minutes: Code Review
 1. validation.ts: a validation is passed through a harsh binary of "passed" or "failed", and "passed" is the only producable implementation. in reality, we need 3 outcomes:
     Outcome 1: commmand runs, exit code 0
     Outcome 2: command runs and exits non-zero, meaning the test suite has a failing test
@@ -12,3 +13,8 @@
 5. git.ts: hardcodes main as the base, which will fail with no merge base; gives a raw execFileSync throw when the path is not a repo; has no maxBuffer; ignores renames (R100) and copies; never produces the untracked status its own type declares
 
 6. report.ts: interpolates command output into ``` fence, so any output w/ the fence (command output) will break the document. also, never itself prints whether validation pass/fail (or for the planned changes, Outcome 1/2/3)
+
+# 10-40 Minutes: Corrections + Further Issues (Backlog)
+- Backlog: 
+1. Killing the shell doesn't kill the grandchildren, so ```npm test``` spawning a node process can leave an orphan on timeout; fix: ```detached: true``` AND ```process.kill(-child.pid)``` on POSIX, which is messy for cross-platform!!!
+2. Capturing stdout and stderr separately loses interleaving order
